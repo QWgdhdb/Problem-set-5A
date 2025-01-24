@@ -1,0 +1,103 @@
+public class Fraction
+{
+    private int numerator;
+    private int denominator;
+
+    public Fraction()
+    {
+        numerator = 0;
+        denominator = 1;
+    }
+
+    public Fraction(int numerator, int denominator)
+    {
+        this.numerator = numerator;
+        this.denominator = denominator;
+    }
+
+    public Fraction(String fraction)
+    {
+        int index = fraction.indexOf("/");
+        numerator = Integer.parseInt(fraction.substring(0, index));
+        denominator = Integer.parseInt(fraction.substring(index + 1));
+    }
+
+    public Fraction(Fraction fraction)
+    {
+        this.numerator = fraction.numerator;
+        this.denominator = fraction.denominator;
+    }
+
+    public int getNum()
+    {
+        return numerator;
+    }
+
+
+    public void setNum(int numerator)
+    {
+        this.numerator = numerator;
+    }
+
+    public int getDenom()
+    {
+        return denominator;
+    }
+
+    @Override
+    public String toString()
+    {
+        return numerator + "/" + denominator;
+    }
+    public double toDouble(){
+        return (double)numerator / denominator;
+    }
+    private void reduce(){
+        int GCF = findGCF(numerator, denominator);
+        numerator /= GCF;
+        denominator /= GCF;
+    }
+    public static Fraction multiply(Fraction f1, Fraction f2){
+        int num = f1.numerator * f2.numerator;
+        int denom = f1.denominator * f2.denominator;
+        Fraction result = new Fraction(num, denom);
+        result.reduce();
+        return result;
+    }
+    public static Fraction divide(Fraction f1, Fraction f2){
+        int num = f1.numerator * f2.denominator;
+        int denom = f1.denominator * f2.numerator;
+        Fraction result = new Fraction(num, denom);
+        result.reduce();
+        return result;
+    }
+    public static Fraction add(Fraction f1, Fraction f2){
+        int num = f1.numerator * f2.denominator + f2.numerator * f1.denominator;
+        int denom = f1.denominator * f2.denominator;
+        Fraction result = new Fraction(num, denom);
+        result.reduce();
+        return result;
+    }
+    public static Fraction subtract(Fraction f1, Fraction f2){
+        int num = f1.numerator * f2.denominator - f2.numerator * f1.denominator;
+        int denom = f1.denominator * f2.denominator;
+        Fraction result = new Fraction(num, denom);
+        result.reduce();
+        return result;
+    }
+    private int findGCF(int a, int b){
+        int big = Math.max(a, b);
+        int small = Math.min(a, b);
+        while(big != small){
+            int result = big - small;
+            big = Math.max(result, small);
+            small = Math.min(result, small);
+        }
+        return big;
+    }
+
+    public void setDenom(int denominator)
+    {
+        this.denominator = denominator;
+    }
+}
